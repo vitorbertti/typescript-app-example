@@ -1,4 +1,9 @@
-class NegotiationController {
+import Negotiations from '../models/Negotiations';
+import Negotiation from '../models/Negotiation';
+import NegotiationsView from '../views/NegotiationsView';
+import MessageView from '../views/MessageView';
+
+export default class NegotiationController {
    private _inputDate: HTMLInputElement;
    private _inputQuantity: HTMLInputElement;
    private _inputValue: HTMLInputElement;

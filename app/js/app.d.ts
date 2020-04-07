@@ -1,1 +1,1 @@
-declare const controller: NegotiationController;
+export {};

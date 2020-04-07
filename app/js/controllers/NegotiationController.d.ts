@@ -1,4 +1,4 @@
-declare class NegotiationController {
+export default class NegotiationController {
     private _inputDate;
     private _inputQuantity;
     private _inputValue;

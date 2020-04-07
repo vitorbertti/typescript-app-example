@@ -1,4 +1,4 @@
-declare class Negotiation {
+export default class Negotiation {
     private _date;
     private _quantity;
     private _value;
