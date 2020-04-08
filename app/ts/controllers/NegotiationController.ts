@@ -20,8 +20,14 @@ export default class NegotiationController {
 
    add(event: Event): void {
       event.preventDefault();
+      let date = new Date(this._inputDate.value.replace(/-/g, ','));
+      if (this._isWeekend(date)) {
+         this._messageView.update('It is not allow to create on weekends');
+         return;
+      }
+
       const negotiation = new Negotiation(
-         new Date(this._inputDate.value.replace(/-/g, ',')),
+         date,
          parseInt(this._inputQuantity.value),
          parseFloat(this._inputValue.value)
       );
@@ -32,4 +38,20 @@ export default class NegotiationController {
 
       this._messageView.update('Success');
    }
+
+   private _isWeekend(date: Date) {
+      return (
+         date.getDay() == WeekDays.Saturday || date.getDay() == WeekDays.Sunday
+      );
+   }
+}
+
+enum WeekDays {
+   Sunday,
+   Monday,
+   Tuesday,
+   Wednesday,
+   Thursday,
+   Friday,
+   Saturday,
 }
