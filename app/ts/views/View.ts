@@ -1,4 +1,4 @@
-export default abstract class View<T> {
+export abstract class View<T> {
    protected _element: Element;
 
    constructor(selector: string) {

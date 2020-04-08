@@ -1,6 +1,6 @@
 import Negotiation from './Negotiation';
 
-export default class Negotiations {
+export class Negotiations {
    private _negotiations: Negotiation[] = [];
 
    add(negotiation: Negotiation): void {

@@ -9,7 +9,7 @@ System.register(["./View"], function (exports_1, context_1) {
             }
         ],
         execute: function () {
-            NegotiationsView = class NegotiationsView extends View_1.default {
+            NegotiationsView = class NegotiationsView extends View_1.View {
                 template(model) {
                     return `
       <table class="table table-hover table-bordered">
@@ -45,7 +45,7 @@ System.register(["./View"], function (exports_1, context_1) {
       `;
                 }
             };
-            exports_1("default", NegotiationsView);
+            exports_1("NegotiationsView", NegotiationsView);
         }
     };
 });

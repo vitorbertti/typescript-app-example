@@ -1,7 +1,5 @@
-import Negotiations from '../models/Negotiations';
-import Negotiation from '../models/Negotiation';
-import NegotiationsView from '../views/NegotiationsView';
-import MessageView from '../views/MessageView';
+import { Negotiation, Negotiations } from '../models/index';
+import { NegotiationsView, MessageView } from '../views/index';
 
 export default class NegotiationController {
    private _inputDate: HTMLInputElement;

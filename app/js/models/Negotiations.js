@@ -16,7 +16,7 @@ System.register([], function (exports_1, context_1) {
                     return [...this._negotiations];
                 }
             };
-            exports_1("default", Negotiations);
+            exports_1("Negotiations", Negotiations);
         }
     };
 });

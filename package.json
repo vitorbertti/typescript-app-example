@@ -4,15 +4,14 @@
    "main": "index.js",
    "license": "MIT",
    "scripts": {
-      "dev": "tsc -w",
-      "build": "babel app/ts --out-dir app/js --extensions \".ts,.js\" --source-maps inline"
+      "dev": "concurrently \"yarn watch\" \"yarn server\"",
+      "watch": "tsc -w",
+      "build": "tsc",
+      "server": "lite-server --baseDir=app"
    },
    "devDependencies": {
-      "@babel/cli": "^7.8.4",
-      "@babel/core": "^7.9.0",
-      "@babel/node": "^7.8.7",
-      "@babel/preset-env": "^7.9.0",
-      "@babel/preset-typescript": "^7.9.0",
+      "concurrently": "^5.1.0",
+      "lite-server": "^2.5.4",
       "typescript": "^3.8.3"
    }
 }

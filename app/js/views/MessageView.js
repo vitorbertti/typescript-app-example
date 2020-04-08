@@ -9,12 +9,12 @@ System.register(["./View"], function (exports_1, context_1) {
             }
         ],
         execute: function () {
-            MessageView = class MessageView extends View_1.default {
+            MessageView = class MessageView extends View_1.View {
                 template(model) {
                     return `<p class="alert alert-info">${model}</p>`;
                 }
             };
-            exports_1("default", MessageView);
+            exports_1("MessageView", MessageView);
         }
     };
 });

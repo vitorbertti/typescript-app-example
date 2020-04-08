@@ -13,7 +13,7 @@ System.register([], function (exports_1, context_1) {
                     this._element.innerHTML = this.template(model);
                 }
             };
-            exports_1("default", View);
+            exports_1("View", View);
         }
     };
 });
