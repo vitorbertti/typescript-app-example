@@ -1,4 +1,4 @@
-import { Negotiation, Negotiations } from '../models/index';
+import { Negotiation, Negotiations, NegotiationType } from '../models/index';
 import { NegotiationsView, MessageView } from '../views/index';
 import { domInject } from '../helpers/decorators/index';
 
@@ -42,6 +42,27 @@ export default class NegotiationController {
       return (
          date.getDay() == WeekDays.Saturday || date.getDay() == WeekDays.Sunday
       );
+   }
+
+   dataImport() {
+      try {
+         fetch('http://localhost:8080/data')
+            .then((res) => res.json())
+            .then((responseData: NegotiationType[]) => {
+               responseData
+                  .map(
+                     (data) =>
+                        new Negotiation(new Date(), data.quantity, data.value)
+                  )
+                  .forEach((negotiation) =>
+                     this._negotiations.add(negotiation)
+                  );
+
+               this._negotiationsView.update(this._negotiations);
+            });
+      } catch (err) {
+         console.error(err);
+      }
    }
 }
 
