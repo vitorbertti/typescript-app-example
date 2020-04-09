@@ -1,3 +1,4 @@
+import { logRuntime } from '../helpers/decorators/index';
 export abstract class View<T> {
    protected _element: Element;
    private _avoidJs: boolean;
@@ -7,6 +8,7 @@ export abstract class View<T> {
       this._avoidJs = avoidJs;
    }
 
+   @logRuntime(false)
    update(model: T): void {
       let template = this.template(model);
       if (this._avoidJs)
