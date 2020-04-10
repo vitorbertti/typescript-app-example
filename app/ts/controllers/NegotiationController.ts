@@ -1,6 +1,7 @@
 import { Negotiation, Negotiations, NegotiationType } from '../models/index';
 import { NegotiationsView, MessageView } from '../views/index';
-import { domInject } from '../helpers/decorators/index';
+import { domInject, throttle } from '../helpers/decorators/index';
+import { NegotiationService, HandlerFunction } from '../services/index';
 
 export default class NegotiationController {
    @domInject('#date')
@@ -12,6 +13,7 @@ export default class NegotiationController {
    private _negotiations = new Negotiations();
    private _negotiationsView = new NegotiationsView('#negotiationsView');
    private _messageView = new MessageView('#messageView');
+   private _negotiationService = new NegotiationService();
 
    constructor() {
       this._negotiationsView.update(this._negotiations);
@@ -44,25 +46,26 @@ export default class NegotiationController {
       );
    }
 
+   @throttle()
    dataImport() {
-      try {
-         fetch('http://localhost:8080/data')
-            .then((res) => res.json())
-            .then((responseData: NegotiationType[]) => {
-               responseData
-                  .map(
-                     (data) =>
-                        new Negotiation(new Date(), data.quantity, data.value)
-                  )
-                  .forEach((negotiation) =>
-                     this._negotiations.add(negotiation)
-                  );
+      const isOk: HandlerFunction = (res: Response) => {
+         if (res.ok) {
+            return res;
+         } else {
+            throw new Error(res.statusText);
+         }
+      };
 
-               this._negotiationsView.update(this._negotiations);
-            });
-      } catch (err) {
-         console.error(err);
-      }
+      this._negotiationService
+         .getData(isOk)
+         .then((negotiations) =>
+            negotiations.forEach((negotiation) =>
+               this._negotiations.add(negotiation)
+            )
+         )
+         .catch((err) => console.error(err));
+
+      this._negotiationsView.update(this._negotiations);
    }
 }
 
