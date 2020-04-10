@@ -2,6 +2,7 @@ import { Negotiation, Negotiations, NegotiationType } from '../models/index';
 import { NegotiationsView, MessageView } from '../views/index';
 import { domInject, throttle } from '../helpers/decorators/index';
 import { NegotiationService, HandlerFunction } from '../services/index';
+import { printLog } from '../helpers/index';
 
 export default class NegotiationController {
    @domInject('#date')
@@ -34,6 +35,7 @@ export default class NegotiationController {
       );
 
       this._negotiations.add(negotiation);
+      printLog(negotiation, this._negotiations);
 
       this._negotiationsView.update(this._negotiations);
 
