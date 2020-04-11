@@ -60,11 +60,17 @@ export default class NegotiationController {
 
       this._negotiationService
          .getData(isOk)
-         .then((negotiations) =>
-            negotiations.forEach((negotiation) =>
-               this._negotiations.add(negotiation)
-            )
-         )
+         .then((negotiations) => {
+            const importedNegotiations = this._negotiations.toArray();
+            negotiations
+               .filter(
+                  (negotiation) =>
+                     !importedNegotiations.some((data) =>
+                        negotiation.isEqual(data)
+                     )
+               )
+               .forEach((negotiation) => this._negotiations.add(negotiation));
+         })
          .catch((err) => console.error(err));
 
       this._negotiationsView.update(this._negotiations);

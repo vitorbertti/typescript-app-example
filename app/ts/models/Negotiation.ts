@@ -1,13 +1,11 @@
-import { Printable } from './Printable';
+import { Interfaces } from './Interfaces';
 
-export class Negotiation extends Printable {
+export class Negotiation implements Interfaces<Negotiation> {
    constructor(
       readonly date: Date,
       readonly quantity: number,
       readonly value: number
-   ) {
-      super();
-   }
+   ) {}
 
    get volume() {
       return this.quantity * this.value;
@@ -21,6 +19,14 @@ export class Negotiation extends Printable {
          Value: ${this.value},
          Volume: ${this.volume}
          `
+      );
+   }
+
+   isEqual(negotiation: Negotiation): boolean {
+      return (
+         this.date.getDate() == negotiation.date.getDate() &&
+         this.date.getMonth() == negotiation.date.getMonth() &&
+         this.date.getFullYear() == negotiation.date.getFullYear()
       );
    }
 }

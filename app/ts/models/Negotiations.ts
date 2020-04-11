@@ -1,7 +1,7 @@
 import { Negotiation } from './index';
-import { Printable } from './Printable';
+import { Interfaces } from './Interfaces';
 
-export class Negotiations extends Printable {
+export class Negotiations implements Interfaces<Negotiations> {
    private _negotiations: Negotiation[] = [];
 
    add(negotiation: Negotiation): void {
@@ -15,5 +15,12 @@ export class Negotiations extends Printable {
    addLog(): void {
       console.log('---Negotiations---');
       console.log(JSON.stringify(this._negotiations));
+   }
+
+   isEqual(negotiations: Negotiations): boolean {
+      return (
+         JSON.stringify(this._negotiations) ==
+         JSON.stringify(negotiations.toArray())
+      );
    }
 }
