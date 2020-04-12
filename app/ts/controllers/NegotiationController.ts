@@ -49,31 +49,31 @@ export default class NegotiationController {
    }
 
    @throttle()
-   dataImport() {
-      const isOk: HandlerFunction = (res: Response) => {
-         if (res.ok) {
-            return res;
-         } else {
-            throw new Error(res.statusText);
-         }
-      };
+   async dataImport() {
+      try {
+         const negotiations = await this._negotiationService.getData((res) => {
+            if (res.ok) {
+               return res;
+            } else {
+               throw new Error(res.statusText);
+            }
+         });
 
-      this._negotiationService
-         .getData(isOk)
-         .then((negotiations) => {
-            const importedNegotiations = this._negotiations.toArray();
-            negotiations
-               .filter(
-                  (negotiation) =>
-                     !importedNegotiations.some((data) =>
-                        negotiation.isEqual(data)
-                     )
-               )
-               .forEach((negotiation) => this._negotiations.add(negotiation));
-         })
-         .catch((err) => console.error(err));
+         const importedNegotiations = this._negotiations.toArray();
+         negotiations
+            .filter(
+               (negotiation) =>
+                  !importedNegotiations.some((data) =>
+                     negotiation.isEqual(data)
+                  )
+            )
+            .forEach((negotiation) => this._negotiations.add(negotiation));
 
-      this._negotiationsView.update(this._negotiations);
+         this._negotiationsView.update(this._negotiations);
+      } catch (err) {
+         console.log(err);
+         this._messageView.update('Import process failed');
+      }
    }
 }
 
